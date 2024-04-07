@@ -22,7 +22,7 @@ function convertSecondsToMinutes(seconds) {
 
 async function getSongs(folder){
     currfolder=folder;
-    let a= await fetch(`/${folder}/`)
+    let a= await fetch(`/Spotify-clone/${folder}/`)
     let response = await a.text();
     let div= document.createElement("div")
     div.innerHTML=response;
@@ -68,7 +68,7 @@ async function getSongs(folder){
 }
 
 const playMusic=(track,pause=false)=>{
-    currentsong.src=`/${currfolder}/` + track
+    currentsong.src=`/Spotify-clone/${currfolder}/` + track
     if(!pause){
         currentsong.play()
         play.src="img/pause.svg"
@@ -79,7 +79,7 @@ const playMusic=(track,pause=false)=>{
 
 }
 async function displayalbums(){
-    let a= await fetch(`/songs/`)
+    let a= await fetch(`/Spotify-clone/songs/`)
     let response = await a.text();
     let div= document.createElement("div")
     div.innerHTML=response;
@@ -92,12 +92,12 @@ async function displayalbums(){
     for (let index = 3; index < array.length; index++) {
         const e = array[index]; 
         if (e.href.includes("/songs") && !e.href.includes(".htaccess")) {
-            let folder = e.href.split("/").slice(-2)[0]
+            let folder = e.href.split("/").slice(-1)[0]
             console.log(folder);
             
     
             //get the metadata of the folder
-    let a= await fetch(`/songs/${folder}/info.json`)
+    let a= await fetch(`/Spotify-clone/songs/${folder}/info.json`)
     let response=await a.json();
     console.log(response);
     cardcontainer.innerHTML=cardcontainer.innerHTML + `<div data-folder="${folder}" class="card border">
@@ -107,7 +107,7 @@ async function displayalbums(){
             <polygon points="8 6 16 12 8 18 8 6" fill="black"/>
           </svg>
     </div>
-    <img src="/songs/${folder}/cover.jpeg">
+    <img src="/Spotify-clone/songs/${folder}/cover.jpeg">
     <h3>${response.title}</h3>
     <p>${response.description}</p>
     </div>` 
